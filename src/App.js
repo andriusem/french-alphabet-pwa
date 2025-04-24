@@ -55,8 +55,10 @@ function App() {
             onClick={() => handleClick(idx)}
             aria-label={item.letter}
           >
-            <span className="front">{item.letter}</span>
-            <span className="back">{item.letter.toLowerCase()}</span>
+            <div className="flip-inner">
+              <span className="front">{item.letter}</span>
+              <span className="back">{item.letter.toLowerCase()}</span>
+            </div>
           </button>
         ))}
       </div>

@@ -35,17 +35,101 @@
   border-radius: 15px;
   box-shadow: 2px 4px 8px #0001;
   transition: box-shadow 0.2s;
+  background: none;
+  padding: 0;
+  overflow: visible;
 }
 
-.alpha-btn.vowel {
+.flip-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(.4,2,.6,1);
+  transform-style: preserve-3d;
+}
+
+.alpha-btn.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.alpha-btn .front,
+.alpha-btn .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  border-radius: 15px;
+}
+
+.alpha-btn .front {
+  z-index: 2;
+}
+
+.alpha-btn .back {
+  transform: rotateY(180deg);
+  font-size: 2rem;
+  text-transform: lowercase;
+  z-index: 1;
+}
+
+
+.flip-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transition: transform 0.4s cubic-bezier(.4,2,.6,1);
+  transform-style: preserve-3d;
+}
+
+.alpha-btn.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+
+.alpha-btn .front,
+.alpha-btn .back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  border-radius: 15px;
+}
+
+.alpha-btn .front {
+  z-index: 2;
+}
+
+.alpha-btn .back {
+  transform: rotateY(180deg);
+  font-size: 2rem;
+  text-transform: lowercase;
+  z-index: 1;
+}
+
+
+
+
+.alpha-btn.vowel .front,
+.alpha-btn.vowel .back {
   background: #3a7bd5;
   color: #fff;
 }
 
-.alpha-btn.consonant {
+.alpha-btn.consonant .front,
+.alpha-btn.consonant .back {
   background: #e74c3c;
   color: #fff;
 }
+
 
 .alpha-btn:active {
   box-shadow: 1px 2px 4px #0002;
@@ -66,21 +150,32 @@
 }
 
 .alpha-btn .front {
+  background: inherit;
+  color: inherit;
   transform: rotateY(0deg);
 }
 
 .alpha-btn .back {
+  background: inherit;
+  color: inherit;
   transform: rotateY(180deg);
   font-size: 2rem;
   text-transform: lowercase;
 }
 
-.alpha-btn.flipped .front {
-  transform: rotateY(180deg);
-}
+/* Remove per-letter flip, handled by .flip-inner now */
 
-.alpha-btn.flipped .back {
-  transform: rotateY(0deg);
+@media (max-width: 600px) {
+  .alphabet-grid {
+    grid-template-columns: repeat(4, 48px);
+    grid-template-rows: repeat(7, 48px);
+    gap: 12px;
+  }
+  .alpha-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+  }
 }
 
 @media (max-width: 600px) {
