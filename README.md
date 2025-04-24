@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # French Alphabet PWA
 
 A Progressive Web App for learning the French alphabet with pronunciation and interactive flip animation for each letter. Vowels are blue, consonants are red, and clicking a letter shows its lowercase form and IPA pronunciation.
@@ -25,3 +26,6 @@ npm run build
 ---
 
 **Made with React.**
+=======
+# french-alphabet-pwa
+>>>>>>> 398555bfaca3b82b40f070beaea789db5d1943ff
