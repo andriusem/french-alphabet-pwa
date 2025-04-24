@@ -37,9 +37,8 @@ function App() {
 
   const handleClick = (idx) => {
     setFlipped((prev) => {
-      const copy = [...prev];
-      copy[idx] = !copy[idx];
-      return copy;
+      // Only flip the clicked button, unflip all others
+      return prev.map((_, i) => i === idx);
     });
     setPronunciation(ALPHABET[idx].ipa);
   };
