@@ -33,26 +33,37 @@ const ALPHABET = [
 
 function App() {
   const [flipped, setFlipped] = useState(Array(26).fill(false));
-  const [pronunciation, setPronunciation] = useState(null);
+  const audioRef = React.useRef(null);
 
   const handleClick = (idx) => {
-    setFlipped((prev) => {
-      // Only flip the clicked button, unflip all others
-      return prev.map((_, i) => i === idx);
-    });
-    setPronunciation(ALPHABET[idx].ipa);
+    setFlipped((prev) => prev.map((_, i) => i === idx));
+    // Stop any currently playing audio
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    const letter = ALPHABET[idx].letter.toUpperCase();
+    const audio = new window.Audio(process.env.PUBLIC_URL + `/sound/${letter}.mp3`);
+    audioRef.current = audio;
+    audio.play();
   };
 
   return (
     <div className="container">
-      <h1 className="pronunciation">{pronunciation || ""}</h1>
+      <img
+        src={process.env.PUBLIC_URL + "/speaker.webp"}
+        alt="Speaker icon"
+        className="speaker-icon"
+        style={{ display: "block", margin: "0 auto 1rem", width: 64, height: 64 }}
+      />
       <div className="alphabet-grid">
         {ALPHABET.map((item, idx) => (
           <button
             key={item.letter}
             className={`alpha-btn ${item.type} ${flipped[idx] ? "flipped" : ""}`}
             onClick={() => handleClick(idx)}
-            aria-label={item.letter}
+            aria-label={`Play pronunciation for ${item.letter}`}
+
           >
             <div className="flip-inner">
               <span className="front">{item.letter}</span>
