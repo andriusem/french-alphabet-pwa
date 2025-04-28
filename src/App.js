@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import { WORDS } from "./words";
 
 // French alphabet data: letter, type (vowel/consonant), IPA pronunciation
 const ALPHABET = [
@@ -34,28 +35,39 @@ const ALPHABET = [
 function App() {
   const [flipped, setFlipped] = useState(Array(26).fill(false));
   const audioRef = React.useRef(null);
+  const [selectedWord, setSelectedWord] = useState("");
+  const [selectedType, setSelectedType] = useState("");
 
   const handleClick = (idx) => {
-    setFlipped((prev) => prev.map((_, i) => i === idx));
+    setFlipped((prev) => {
+      // If already flipped, unflip all; else flip only this one
+      if (prev[idx]) {
+        return Array(26).fill(false);
+      } else {
+        return prev.map((_, i) => i === idx);
+      }
+    });
+    const letter = ALPHABET[idx].letter.toUpperCase();
+    setSelectedWord(WORDS[letter] || "");
+    setSelectedType(ALPHABET[idx].type); // 'vowel' or 'consonant'
     // Stop any currently playing audio
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
-    const letter = ALPHABET[idx].letter.toUpperCase();
     const audio = new window.Audio(process.env.PUBLIC_URL + `/sound/${letter}.mp3`);
     audioRef.current = audio;
     audio.play();
   };
 
+
   return (
     <div className="container">
-      <img
-        src={process.env.PUBLIC_URL + "/speaker.webp"}
-        alt="Speaker icon"
-        className="speaker-icon"
-        style={{ display: "block", margin: "0 auto 1rem", width: 64, height: 64 }}
-      />
+      <h1 className="selected-word" style={{ textAlign: "center", margin: "0 auto 1rem", fontSize: 32 }}>
+        {selectedWord
+          ? <><span className={selectedType}>{selectedWord[0]}</span>{selectedWord.slice(1)}</>
+          : null}
+      </h1>
       <div className="alphabet-grid">
         {ALPHABET.map((item, idx) => (
           <button

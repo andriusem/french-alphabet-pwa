@@ -16,6 +16,14 @@
   min-height: 3rem;
 }
 
+.vowel {
+  color: #1976d2; /* blue for vowels */
+}
+
+.consonant {
+  color: #d32f2f; /* red for consonants */
+}
+
 .alphabet-grid {
   display: grid;
   grid-template-columns: repeat(4, 70px);
